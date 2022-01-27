@@ -1,0 +1,180 @@
+import React, { useState, useEffect } from 'react';
+
+function Form(props) {
+  const [phoneData, setPhoneData] = useState({
+    firstName: 'Bigyan',
+    lastName: 'Khanal',
+    phoneNumber: '0431302178',
+  });
+
+  const [data, setData] = useState([]);
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    setData(
+      (data) => [
+        ...data,
+        {
+          firstName: phoneData.firstName,
+          lastName: phoneData.lastName,
+          phoneNumber: phoneData.phoneNumber,
+        },
+      ]
+      //props.saveFn({ data: data })
+    );
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        First Name:
+        <input
+          type='text'
+          value={phoneData.firstName}
+          onChange={(e) => setPhoneData({ firstName: e.target.value })}
+        />
+      </label>
+      <br></br>
+      <label>
+        Last Name:
+        <input
+          type='text'
+          value={phoneData.lastName}
+          onChange={(e) => setPhoneData({ lastName: e.target.value })}
+        />
+      </label>
+      <br></br>
+      <label>
+        Phone Number:
+        <input
+          type='text'
+          value={phoneData.phoneNumber}
+          onChange={(e) => setPhoneData({ phoneNumber: e.target.value })}
+        />
+      </label>
+      <br></br>
+      <input type='submit' value='Submit' />
+      {data.map((item) => {
+        return (
+          <>
+            <p>{item.firstName}</p>
+            <p>{item.lastName}</p>
+            <p>{item.phoneNumber}</p>
+          </>
+        );
+      })}
+      {/* <table>
+        <tbody>
+          {data.map((item) => (
+            <tr>
+              <td>{item.firstName} </td>
+              <td>{item.lastName} </td>
+              <td>{item.phoneNumber} </td>
+            </tr>
+          ))}
+        </tbody>
+      </table> */}
+    </form>
+  );
+}
+
+export default Form;
+
+
+
+
+
+
+
+
+
+
+/////////table
+
+
+import React from 'react';
+
+const style = {
+  table: {
+    borderCollapse: 'collapse',
+  },
+  tableCell: {
+    border: '1px solid gray',
+    margin: 0,
+    padding: '5px 10px',
+    width: 'max-content',
+    minWidth: '150px',
+  },
+  form: {
+    container: {
+      padding: '20px',
+      border: '1px solid #F0F8FF',
+      borderRadius: '15px',
+      width: 'max-content',
+      marginBottom: '40px',
+    },
+    inputs: {
+      marginBottom: '5px',
+    },
+    submitBtn: {
+      marginTop: '10px',
+      padding: '10px 15px',
+      border: 'none',
+      backgroundColor: 'lightseagreen',
+      fontSize: '14px',
+      borderRadius: '5px',
+    },
+  },
+};
+
+//const defaultItems = [''];
+
+function Table(props) {
+  //console.log('Table' + props);
+  //console.log('Table props' + props.Items.data);
+  const tableItems = props.Items.data;
+  //const data = tableItems.map((item) => <td>{item}</td>);
+  console.log('table items' + tableItems);
+  return (
+    <table style={style.table} className='informationTable'>
+      <thead>
+        <tr>
+          <th style={style.tableCell}>First name</th>
+          <th style={style.tableCell}>Last name</th>
+          <th style={style.tableCell}>Phone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr></tr>
+      </tbody>
+    </table>
+  );
+}
+
+export default Table;
+
+
+
+
+
+////////appjs
+
+import './App.css';
+import Form from './Form';
+import Table from './Table';
+import { useState } from 'react';
+
+function App() {
+  const [items, setItems] = useState([]);
+  function addItem(newItem) {
+    setItems(newItem);
+  }
+  return (
+    <div className='App'>
+      <Form saveFn={addItem} />
+      <Table Items={items} />
+    </div>
+  );
+}
+
+export default App;
+
